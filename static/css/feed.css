@@ -1,0 +1,38 @@
+
+.nav-input{
+    width: 500px;  
+    background-color: #edede9; 
+}
+
+.nav-input:focus{
+    background-color: transparent;
+}
+
+.button{
+    background-color: #edede9;
+    width: 45px;
+    padding-top: 7px;
+    border: none;
+    border-radius: 100px; 
+}
+
+.button:hover{
+    background-color: transparent;
+}
+
+.links:hover{
+    color: #a8dadc;
+}
+
+
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 300,
+  'GRAD' 0,
+  'opsz' 48
+}
+
+.material-symbols-outlined:hover{
+    color: #a8dadc;
+} 

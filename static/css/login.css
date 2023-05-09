@@ -1,0 +1,81 @@
+
+body{
+	background-color: #eaf4f4;
+}
+
+h1{
+    font-family: 'Viga', sans-serif;
+}
+
+.inputs{
+    width: 300px;
+    height: 40px;
+}
+
+.login-div{
+    width: 400px;
+    height: 440px;
+    padding: 30px;
+    background-color: rgba(58, 56, 56, 0.35);
+    border-radius: 15px;
+}
+
+
+.login-div .barras input{
+    height: 40px;
+    width: 100%;
+    font-size: 16px;   
+    border: solid 1px rgb(0, 0, 0);
+    background-color: transparent;
+    margin-bottom: 25px;
+    border-radius: 5px;
+    outline: none;
+}
+
+.login-div .barras input:hover{
+    border: 1px solid #a8dadc;
+}
+
+.login-div .button{
+    height: 40px;
+    width: 100%;
+    font-size: 18px;
+    border: 1px solid black;
+    background-color: transparent;
+    margin-bottom: 30px;
+    border-radius: 5px;
+    outline: none;
+}
+
+.login-div .button:hover{
+    background-color: #a8dadc;
+}
+
+.login-div .enlaces{
+    text-decoration:none;
+    margin-bottom: 5px;
+    font-size: 16px;
+    font-family: 'Roboto', sans-serif;
+    color: black;
+    display: block;
+}
+
+.login-div .enlaces:hover{
+    color: #a8dadc;
+    cursor: pointer;
+}
+
+.register-div{
+    height: 530px;
+}
+
+.register-button{
+    height: 40px;
+    width: 100%;
+    font-size: 18px;
+    border: 1px solid black;
+    background-color: transparent;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    outline: none;
+}
