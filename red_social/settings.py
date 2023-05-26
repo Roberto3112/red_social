@@ -126,17 +126,20 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
 
+# Images URL
+MEDIA_URL = '/images/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 #SMTP configuration
-
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-# Put email for forgot password funcionality.
+# Put email to forgot password funcionality.
 EMAIL_HOST_USER = ''
 EMAIL_HOST_PASSWORD = ''

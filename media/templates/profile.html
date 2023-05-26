@@ -1,0 +1,162 @@
+{%extends 'main.html'%}
+
+{%load static%}
+{% block content%}
+
+{% comment %} Icons {% endcomment %}
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+{% comment %} sweetAlert {% endcomment %}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<div class="row">
+    <div class="col-12 user-profile post-color">
+        <div class="row">
+            <div class="col-12 d-flex column justify-content-center post-color">
+                <img src="{{user.profile.image.url}}" alt="user_image" width="200" class="img-design my-2">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 text-center">
+                <p>@{{user.profile}}</p>
+            </div>
+        </div>
+
+        <div class="row">
+          <div class="col-12 text-center">
+              <p>{{user.profile.description}}</p>
+          </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 text-center">
+                <a href="{%url 'settings'%}" class="btn btn-success mb-2"> &#x270E; edit profile</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row post-color">
+  <div class="col-12 d-flex flex-column align-items-center">
+
+     {%if posts|length == 0%}
+      <h2 class="mt-5">You don't have post yet</h2>
+      {%else%}
+      {% for post, result in results%}
+      <div class="card w-75 my-4">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-12 col-xl-1 col-md-1 col-sm-3 me-md-4 me-xl-0" >
+            <img src="{{post.id_profile.image.url}}" alt="user image" width="50">
+          </div>
+
+          <div class="col-12  col-xl-11 col-md-10 col-sm-9">
+            <div class="row">
+              <div class="col-6">
+                <p class="my-2">@{{post.id_profile}}</p>
+              </div>
+
+              {% if user.profile == post.id_profile %}
+              <div class="col-6">
+                <button class="border-0 float-end button-check interact-icons" data-action="delete" data-post="{{post.id}}" data-user="{{user.profile.id}}">
+                  <span class="material-symbols-outlined">delete</span>
+                </button>
+              </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-12 border-bottom">
+            <p class="my-2">{{post.content}}</p>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-6">
+            <p class="footer-post">Created: {{post.date_added}}</p>
+          </div>
+
+          <div class="col-6">
+            <button class="border-0 float-end comment-post interact-icons">
+                <span>{{post.total_comment_post}}</span>
+              <span class="material-symbols-outlined">chat_bubble</span>
+            </button>
+
+            <button class="border-0 float-end button-check interact-icons me-1 favorite-button"
+                    data-action="like" data-post="{{post.id}}" data-user="{{user.profile.id}}" data-active="{{result}}">
+              <span>{{post.total_likes_post}}</span>
+              <span class="material-symbols-outlined favorite-icon">favorite</span>
+
+            </button>
+          </div>
+        </div>
+
+        <div class="row comment-section hidden">
+
+          <form method="POST" action="{% url 'add_comment' post.id %}">
+            {% csrf_token %}
+          <div class="col-12 pb-3 mt-3">
+            <input type="text" name="comment" placeholder="add comment" required>
+            <button class="btn btn-primary" type="submit">Sent</button>
+          </div>
+          </form>
+
+          <div class="col-12 mt-2 text-center">
+            <p>Comments</p>
+          </div>
+
+            {%for comment in all_comments%}
+                  {%if comment.id_post_id == post.id%}
+                  <div class="row">
+                    <div class="card w-100 my-2 ms-2 ">
+                      <div class="card-body">
+                        <div class="row">
+
+                          <div class="col-12 col-xl-1 col-md-1 col-sm-3 me-md-4 me-xl-0" >
+                            <img src="{{comment.id_profile.image.url}}" alt="user image" width="50">
+                          </div>
+
+                          <div class="col-12 col-xl-11 col-md-10 col-sm-9">
+                            <div class="row">
+                              <div class="col-6">
+                                <p class="my-2">@{{comment.id_profile}}</p>
+                              </div>
+
+                              <div class="col-6">
+                                <button class="border-0 float-end comments-buttons interact-icons" data-action="delete" data-comment="{{comment.id}}" data-user="{{user.profile.id}}">
+                                  <span class="material-symbols-outlined">delete</span>
+                                </button>
+                              </div>
+
+                              <div class="col-12 mt-2 border-bottom">
+                                <p>{{comment.content}}</p>
+                              </div>
+
+                              <div class="col-12">
+                                <p class="footer-post">{{comment.date_added}}</p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+                  {%endif%}
+            {%endfor%}
+        </div>
+      </div>
+    </div>
+    {%endfor%}
+      {%endif%}
+  </div>
+
+</div>
+
+<script>
+  let csrfToken = "{{csrf_token}}"
+</script>
+<script src="{% static 'js/profile.js'%}"></script>
+{% endblock content %}

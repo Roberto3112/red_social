@@ -1,0 +1,57 @@
+{% extends 'main.html' %}
+
+{% block  content%}
+{% load static %}
+<link rel="stylesheet" href="{%static 'css/feed.css'%}">
+
+<div class="row justify-content-center">
+    <div class="col-12 align-items-center settings-div my-4">
+        
+        <div class="my-4">
+            <h2 class="text-center">Add your information</h2>
+        </div>
+
+        <form method="POST">
+            {% csrf_token %}
+            <div class="my-2">
+                {{form.name}}
+            </div>
+
+            <div class="my-2">
+                {{form.lastname}}
+            </div>
+
+            <div class="my-2">
+                {{form.username}}
+            </div>
+
+            <div class="my-2"> 
+                {{form.email}}
+            </div>
+
+            <div class="my-2">
+                {{form.phone}}
+            </div>
+
+            <div class="my-2">
+                {{form.date_of_birth}}
+            </div>
+
+            <div class="my-2">
+                {{form.description}}
+            </div>
+
+            <div class="my-2">
+                {{form.image}}
+            </div>
+
+            <div class="my-3">
+                <button class="settings-button">Agregar</button>
+            </div>
+        </form>
+    </div>
+
+</div>
+{% endblock content%}
+
+

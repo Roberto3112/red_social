@@ -14,24 +14,22 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
     <link rel="stylesheet" href="{%static 'css/feed.css'%}">
+
   </head>
     <title>Likeit</title>
   </head>
 
   <body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary nav-bar sticky-top">
       <div class="container-fluid">
-        <img src="{%static 'images/icon.png'%}" alt="bird" width="50">
+        <img src="{%static 'images/login/icon.png'%}" alt="bird" width="50">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link links" aria-current="page" href="#">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link links" href="#">Link</a>
+              <a class="nav-link links" aria-current="page" href="{%url 'feed'%}">Home</a>
             </li>
           </ul>
         
@@ -42,14 +40,13 @@
             </button>
           </form>
           
-          <a class="nav-link me-4 links" href="#">hi, {{user.profile}}!</a>
+          <p class="nav-link me-4 mt-3 ">hi, {{user.profile}}!</p>
           <a class="nav-link me-4 links" href="{%url 'log_out'%}">Log out</a> 
         </div>
       </div>
     </nav> 
 
-    <div class="container">
-      <br>
+    <div class="container-fluid">
       {% block content %}
 
 
