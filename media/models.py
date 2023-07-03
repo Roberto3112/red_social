@@ -29,6 +29,7 @@ class post(models.Model):
         else:
             return 'False'
 
+
 class comment(models.Model):
     id_profile = models.ForeignKey(profile, on_delete=models.CASCADE)
     id_post = models.ForeignKey(post, on_delete=models.CASCADE)
@@ -42,4 +43,9 @@ class like(models.Model):
     active = models.BooleanField(default=False)
     date_added = models.DateTimeField(auto_now_add=True)
 
-    
+
+class follower(models.Model):
+    id_follower = models.ForeignKey(profile, on_delete=models.CASCADE, related_name='followers')
+    id_following = models.ForeignKey(profile, on_delete=models.CASCADE, related_name='following')
+    date_added = models.DateTimeField(auto_now_add=True)
+

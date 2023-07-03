@@ -105,14 +105,31 @@ const sendCommentData = (dataAction, commentID, userID) => {
     })
 }
 
-let likeButton = document.getElementsByClassName('favorite-button')
+let likeButton = document.getElementsByClassName('like-img')
 
-window.addEventListener('load', ()=>{
-    for (let i = 0; i < likeButton.length; i++){
-        if (likeButton[i].dataset.active == "True"){
-            let favoriteImg = document.getElementsByClassName('favorite-icon')
-            favoriteImg[i].classList.remove('material-symbols-outlined')
-            favoriteImg[i].innerHTML = "<img src='https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Heart_coraz%C3%B3n.svg/640px-Heart_coraz%C3%B3n.svg.png' width='23'>"
-        }
+
+for(let i = 0; i < likeButton.length; i++){
+    console.log('hola')
+    if (likeButton[i].dataset.active == "True"){
+        console.log('active')
+        likeImg = document.getElementsByClassName('like-button')
+        likeImg[i].innerHTML = "<img src='https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Heart_coraz%C3%B3n.svg/640px-Heart_coraz%C3%B3n.svg.png' width='23'>"
+        console.log(likeImg[i])
     }
-})
+}
+
+// Change follow button if user is active.
+let followButton = document.getElementsByClassName('follow-container')
+
+for(let i = 0; i < followButton.length; i++){
+    
+    if(followButton[i].dataset.follow == 'True'){
+        followButton[i].innerHTML = 'following'
+        followButton[i].classList.add('following-button')
+
+    }else{
+        followButton[i].classList.add('follow-button')
+    }
+}
+
+

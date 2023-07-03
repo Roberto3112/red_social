@@ -4,7 +4,10 @@ from django.contrib import messages
 from accounts.models import profile
 import json
 from django.http import JsonResponse
-from .models import post, comment, like
+from .models import post, comment, like, follower
+
+from django.apps import apps
+from django.db.models.deletion import ProtectedError
 
 
 # Create your views here.
@@ -33,10 +36,16 @@ def feed(request):
             is_like_value = posts.like_value(user)
             results.append((posts, is_like_value))
 
-        all_comment = comment.objects.all()
+        # For know if a profile follow a other.
         all_profile = profile.objects.all()[:4]
+        profile_value = []
+        for profiles in all_profile:
+            is_follow_value = profiles.follow_value(user)
+            profile_value.append((profiles, is_follow_value))
 
-        context = {'all_comments': all_comment, 'all_profile': all_profile, 'results': results}
+        all_comment = comment.objects.all()
+
+        context = {'all_comments': all_comment, 'all_profile': profile_value, 'results': results}
         return render(request, 'feed.html', context)
     except Exception as e:
         print(f"There's an error: {e}")
@@ -45,10 +54,11 @@ def feed(request):
 def settings(request):
     # To edit the profile information
     if request.method == 'POST':
-        form = profile_form(request.POST, instance=request.user.profile)
+        form = profile_form(request.POST, request.FILES ,instance=request.user.profile)
 
         if form.is_valid():
             form.save()
+            print(form['image'].value)
             return redirect('feed')
     else:
         form = profile_form(instance=request.user.profile)
@@ -62,12 +72,18 @@ def profile_view(request, id):
     all_post = post.objects.filter(id_profile=user_profile).order_by('date_added')
     results = []
 
+    # For pass true or false is user liked the post.
     for posts in all_post:
         is_like_value = posts.like_value(user_profile)
         results.append((posts, is_like_value))
 
+    all_followers = follower.objects.filter(id_following=id).count()
+    all_following = follower.objects.filter(id_follower=id).count()
+
     all_comment = comment.objects.all()
-    context = {'user_profile': user_profile, 'posts': all_post, 'all_comments':all_comment ,'results': results}
+
+    context = {'user_profile': user_profile, 'posts': all_post, 'all_comments':all_comment ,
+               'results': results, 'followers':all_followers, 'following': all_following}
     return render(request, 'profile.html', context)
 
 
@@ -76,26 +92,6 @@ def post_action(request):
     action = data['action']
     post_id = data['post']
     user = data['user']
-
-    # To create or delete a like if the user is already clicked.
-    if action == 'like':
-        try:
-            profile_user = profile.objects.get(id=user)
-            posts = post.objects.get(id=post_id)
-
-            exist_like = like.objects.filter(id_post=posts, id_profile=profile_user).count()
-            if exist_like == 0:
-                new_like = like.objects.create(id_post=posts, id_profile=profile_user, active=True)
-                new_like.save()
-                print(f'Like created: {new_like.id}')
-                return redirect('feed')
-            else:
-                print(f'Like deleted: {like.objects.get(id_post=posts, id_profile=profile_user)}')
-                like.objects.get(id_post=posts, id_profile=profile_user).delete()
-                return redirect('feed')
-
-        except Exception as e:
-            print(f"There's an error: {e}")
 
     # Delete a post.
     if action == 'delete':
@@ -149,3 +145,33 @@ def comment_action(request):
             print("You can't delete this comment")
 
     return JsonResponse('Data sent...', safe=False)
+
+
+def like_action(request, id): 
+    user_profile = request.user.profile
+    post_to_like = post.objects.get(id=id)
+
+    created_like = like.objects.filter(id_profile=user_profile, id_post=post_to_like).count()
+
+    if created_like == 0:
+        new_like = like.objects.create(id_profile=user_profile, id_post=post_to_like)
+        new_like.save()
+    else:
+        like.objects.get(id_profile=user_profile, id_post=post_to_like).delete()
+
+    return redirect('feed')
+
+
+def follow(request, id):
+    user_profile = request.user.profile
+    user_to_follow = profile.objects.get(id=id)
+
+    check_follow = follower.objects.filter(id_follower=user_profile, id_following=user_to_follow).count() 
+    if check_follow == 0:
+        follower.objects.create(id_follower=user_profile, id_following=user_to_follow)
+        print('Follow created.')
+    else:
+        follower.objects.get(id_follower=user_profile, id_following=user_to_follow).delete()
+        print('Follow deleted.')
+    return redirect('feed')
+    

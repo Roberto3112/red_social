@@ -12,7 +12,7 @@ def login_page(request):
         password = request.POST.get('password')
 
         user = authenticate(request, username=username, password=password)
-
+        
         if user is not None:
             login(request, user)
             return redirect('feed')
@@ -30,9 +30,9 @@ def register(request):
         if form.is_valid():
             form.save()
 
-            usermane = request.POST['username']
+            username = request.POST['username']
             if User:
-                user = User.objects.get(username=usermane)
+                user = User.objects.get(username=username)
                 user.is_staff = True
                 user.is_superuser = True
                 user.save()

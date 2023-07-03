@@ -9,5 +9,7 @@ urlpatterns = [
     path('profile/<int:id>', login_required(profile_view), name='profile_view'),
     path('profile/post_action', post_action, name='profile_post_action'), 
     path('post/<int:id>/comment', login_required(add_comment_to_post), name='add_comment'),
-    path('comment_action', login_required(comment_action), name='comment_actions')
+    path('comment_action', login_required(comment_action), name='comment_actions'),
+    path('like_action/<int:id>', login_required(like_action), name= 'like_action'),
+    path('follow/<int:id>/', login_required(follow), name='follow')
 ]

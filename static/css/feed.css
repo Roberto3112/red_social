@@ -132,8 +132,10 @@
     background-color: transparent;
 }
 
-.button-check{
+
+.like-img{
     color: black;
+    text-decoration: none;
 }
 
 
@@ -152,7 +154,7 @@
 
 .follow-button{
     background-color: #0077b6;
-    border: 2px solid #0077b6;
+    border: 2px solid #0077b6;  
     cursor: pointer;
     color: white;
     border-radius: 25px;
@@ -162,6 +164,21 @@
     background-color: transparent;
     border: 2px solid #0077b6;
     color: black
+}
+
+.following-button{
+    background-color: transparent;
+    border: 2px solid #0077b6;
+    color: black;
+    border-radius: 25px;
+}
+
+.following-button:hover{
+    background-color: #0077b6;
+    border: 2px solid #0077b6;  
+    cursor: pointer;
+    color: white;
+
 }
 
 .might-know-card{

@@ -107,18 +107,10 @@
               <span class="material-symbols-outlined">chat_bubble</span>
             </button>
 
-            <button
-              class="border-0 float-end button-check interact-icons me-1 favorite-button"
-              data-action="like"
-              data-post="{{post.id}}"
-              data-user="{{user.profile.id}}"
-              data-active="{{result}}"
-            >
-              <span>{{post.total_likes_post}}</span>
-              <span class="material-symbols-outlined favorite-icon"
-                >favorite</span
-              >
-            </button>
+            <a href="{%url 'like_action' post.id%}" class="float-end like-img" data-active="{{result}}">
+              <span class="">{{post.total_likes_post}}</span>
+              <span class="material-symbols-outlined like-button">favorite</span>
+            </a>
           </div>
         </div>
 
@@ -207,7 +199,8 @@
   </div>
 
   <div class="col-3 col-xl-2 col-md-2 might-know-card">
-    {%for profile in all_profile%}
+    
+    {% for profile, follow_value in all_profile %}
     <div class="card w-100 my-2">
       <div class="card-body">
         <div class="row border-bottom">
@@ -218,11 +211,12 @@
           <div class="col-12 col-xl-10 me-md-4 me-xl-0">
             <p class="p-xl-3">@{{profile.user}}</p>
           </div>
+
         </div>
 
         <div class="row">
-          <div class="col-12 d-grid gap-2 mt-3">
-            <button class="btn follow-button">Follow</button>
+          <div class="col-12 d-grid gap-2 mt-3 ">
+            <a class="btn follow-container" data-follow="{{follow_value}}" href="{% url 'follow' profile.id%}">Follow</a>
           </div>
         </div>
       </div>

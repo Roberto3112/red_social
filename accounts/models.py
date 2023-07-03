@@ -18,6 +18,15 @@ class profile(models.Model):
     def __str__(self):
         return self.user.username
 
+    # To know if a profile follow other.
+    def follow_value(self, user):
+        follow = self.following.filter(id_follower=user).count()
+
+        if follow == 1:
+            return 'True'
+        else:
+            return 'False'
+
 
 # To create a profile when we add a new user.
 def create_user_profile(sender, instance, created, **kwargs):

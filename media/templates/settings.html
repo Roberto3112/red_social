@@ -11,7 +11,7 @@
             <h2 class="text-center">Add your information</h2>
         </div>
 
-        <form method="POST">
+        <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="my-2">
                 {{form.name}}
@@ -46,7 +46,7 @@
             </div>
 
             <div class="my-3">
-                <button class="settings-button">Agregar</button>
+                <button type="submit" class="settings-button">Agregar</button>
             </div>
         </form>
     </div>
